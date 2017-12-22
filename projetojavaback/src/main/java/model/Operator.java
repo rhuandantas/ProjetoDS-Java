@@ -3,8 +3,12 @@ package model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Operator {
@@ -14,8 +18,14 @@ public class Operator {
 	private Integer id;
 	private String name;
 	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="operator_project",
+	joinColumns=@JoinColumn(name="id_operator"),
+	inverseJoinColumns=@JoinColumn(name="id_project"))
 	private List<Project> projects;
+	
 	private Boolean isAdmin;
+	
 	public Integer getId() {
 		return id;
 	}
